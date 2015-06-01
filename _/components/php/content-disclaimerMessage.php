@@ -1,0 +1,1 @@
+<p><small class="pull-right">0.0<sup>*</sup> denotes a mass measurement discrepancy.  See <a href="disclaimer.php" target="_blank">disclaimer</a> page for details.</small></p>
