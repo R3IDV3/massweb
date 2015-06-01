@@ -217,11 +217,11 @@
 	</table>
 </div><!-- search results table -->
 
-<?php if(strcmp($_GET['searchby'], "class") == 0 OR strcmp($_GET['searchby'], "order") == 0 OR strcmp($_GET['searchby'], "family") == 0 OR strcmp($_GET['searchby'], "genus") == 0 OR strcmp($_GET['searchby'], "species") == 0): ?>
+<?php if(strcmp($_GET['searchby'], "class") == 0 OR strcmp($_GET['searchby'], "order") == 0 OR strcmp($_GET['searchby'], "family") == 0 OR strcmp($_GET['searchby'], "genus") == 0 OR strcmp($_GET['searchby'], "species") == 0): ?> <!-- if table-results.php is being accessed by "Browse" -->
 	<div class="text-center">
 		<?php include 'pagination-browseresults.php'; ?>
 	</div>
-<?php else: ?>
+<?php else: ?> <!-- if table-results.php is being accessed by "Search" -->
 	<div class="text-center">
 		<?php include 'pagination-search.php'; ?>
 	</div>

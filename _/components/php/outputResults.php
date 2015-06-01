@@ -7,9 +7,9 @@ if(!isset($searchTerm))
 
 if($_GET['searchterm'] != "")
 {
-	$searchTerm = cleanse($_GET['searchterm']);
+	$searchTerm = cleanse($_GET['searchterm']); // cleanse() is found in helper_cleanse.php
 
-	$searchArray = explode(",", $_GET['searchterm']);
+	$searchArray = explode(",", $_GET['searchterm']); // multiple search terms can be separated by commas
 
 	foreach($searchArray as $word)
 	{
