@@ -1,0 +1,5 @@
+<article id="disclaimer">
+	<legend><h4>Data Disclaimer</h4></legend>
+		Most of the BIC specimens are pinned arthropods (mainly insects). Each insect is pinned before drying using a standard set of insect pins. To preserve the integrity of the specimens, they are kept on their insect pin as they are weighed. During the weighing process, the pin diameter is measured using calipers, and using this diameter we are able to determine the mass of the pin to be subtracted from the net mass. Thus, most mass values displayed are actually [Mass of the Insect Pin] subtracted from [Mass of the Specimen and the Insect Pin]. As the mass of each insect pin was determined by weighing many replicates of the same pin size, there will always be a measure of error associated with these records. In some cases where we have a small insect and a large pin mass, it can result in our specimen mass being calculated to be less than zero. For these records, we will report that the mass of the specimen is zero, and place an asterisk (*) beside this value to alert you that this change has been made. 
+	<br><br>
+</article>
