@@ -1,0 +1,4 @@
+AuthType Basic  
+AuthName "Restricted Area"
+AuthUserFile /home/189691/domains/massbase.org/html/new/restricted/.htpasswd
+require valid-user
