@@ -30,7 +30,8 @@
 				if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 					var target = $(this.hash);
 					target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-					if (target.length) {
+					var notAlreadyThere = ( target.offset().top != $(window).scrollTop() );
+					if (target.length && notAlreadyThere ) {
 						$('html,body').animate({
 							scrollTop: target.offset().top
 						}, 1500, 'easeOutElastic');
