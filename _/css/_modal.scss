@@ -1,0 +1,270 @@
+/* The trigger */
+.md-trigger {
+	cursor: pointer;
+}
+
+/* The modal */
+.modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 100vw;
+	height: 100vh;
+	z-index: 2000;
+	visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	
+	.popover.show {
+		visibility: hidden;
+	}
+	
+	&.open {
+		visibility: visible;
+		
+		.popover.show {
+			visibility: visible;
+		}
+		
+		.content {
+			-webkit-transform: scale(1);
+			-moz-transform: scale(1);
+			-ms-transform: scale(1);
+			transform: scale(1);
+			opacity: 1;
+			visibility: visible;
+		}
+		
+		.md-close {
+			opacity: 1;
+			pointer-events: auto;
+			-webkit-transform: scale3d(1,1,1);
+			transform: scale3d(1,1,1);
+			-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+			transition: opacity 0.3s, transform 0.3s;
+		}
+	}
+	
+	&#specimen-modal {
+		
+		.dialog {
+			min-width: 25%;
+			min-height: 50%;	
+		}
+	}
+	
+	.content {
+		cursor: pointer;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		-webkit-transform: scale(0.8);
+		-moz-transform: scale(0.8);
+		-ms-transform: scale(0.8);
+		transform: scale(0.8);
+		opacity: 0;
+		visibility: hidden;
+		-webkit-transition: all 0.3s;
+		-moz-transition: all 0.3s;
+		transition: all 0.3s;
+		
+		.loading-anim {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-webkit-transform: translate3d(-50%, -50%, 0);
+				-ms-transform: translate3d(-50%, -50%, 0);
+					transform: translate3d(-50%, -50%, 0);
+			width: 50px;
+		}
+	}
+	
+	.md-close {
+		width: 36px;
+		height: 36px;
+		position: fixed;
+		right: 1em;
+		top: 1em;
+		overflow: hidden;
+		text-indent: 100%;
+		cursor: pointer;
+		pointer-events: none;
+		opacity: 0;
+		-webkit-transform: scale3d(0,0,1);
+		transform: scale3d(0,0,1);
+		z-index: 100000000;
+	}
+	
+	.md-close::before,
+	.md-close::after {
+		content: '';
+		position: absolute;
+		width: 2px;
+		height: 100%;
+		top: 0;
+		left: 50%;
+		border-radius: 3px;
+		opacity: 0.2;
+		background: #000;
+		-webkit-transition: opacity 0.3s;
+		transition: opacity 0.3s;
+	}
+	
+	.md-close:hover.md-close::before,
+	.md-close:hover.md-close::after {
+		opacity: 0.5;
+	}
+	
+	.md-close::before {
+		-webkit-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	
+	.md-close::after {
+		-webkit-transform: rotate(-45deg);
+		transform: rotate(-45deg);
+	}
+	
+	.dialog {
+		@include ac();
+		background: rgba(255,255,255,1);
+		cursor: default;
+		max-height: 100%;
+		overflow: scroll;
+		//-webkit-overflow-scrolling: touch;
+		
+		.back {
+			display: none;
+			position: absolute;
+			left: 1em;
+			top: 1em;
+			cursor: pointer;
+			font-size: 1.5rem;
+			
+			&.show {
+				display: block;
+			}
+		}
+		
+		section {
+			padding: 1.5em;
+			font-size: 1.6rem;
+		}
+		
+		a:hover {
+			color: #5498DC;
+		}
+		
+		h1 {
+			font-size: 5rem;
+			color: #404040;
+			margin: 0;
+			padding: 0 1em;
+		}
+		
+		h2.tax {
+			color: #999;
+			font-size: 3rem;
+			font-weight: 200;
+			margin: 0;
+			padding: 0;
+		}
+		
+		ol {
+			padding: 1.5em;
+			padding-left: 3.125em;
+			font-size: 1.6rem;
+			text-align: left;
+		}
+		
+		p {
+			margin: 0;
+			padding: 0;
+			font-size: 1.6rem;
+			text-align: left;
+			color: #404040;
+		}
+		
+		cite {
+			display: block;
+			width: 100%;
+			margin: 0;
+			padding: 25px;
+			font-style: normal;
+			font-size: 1.6rem;
+			font-weight: $bold;
+			text-align: left;
+			background: rgba(100,100,100,0.1);
+		}
+		
+		table {
+			font-size: 1.5rem;
+			text-align: left;
+			
+			tr {
+				background-color: transparent;
+				
+				&:nth-child(even) {
+			    	background-color: transparent;
+			    }
+			    
+			    th {
+				    font-weight: 400;
+			    }
+			    
+			    td {
+				    
+				    .sub {
+					    color: #999;
+					    font-size: 1.4rem;
+					    font-weight: 400;
+				    }
+			    }
+			}
+		}
+		
+		@include portrait() {
+			height: 100%;
+			width: 100%;
+			
+		}
+	}
+}
+
+html.touch {
+	
+	.content {
+		-webkit-transform: scale(0);
+		-moz-transform: scale(0);
+		-ms-transform: scale(0);
+		transform: scale(0);
+	}
+}
+
+/* The overlay */
+.overlay {
+	background: rgba(0,0,0,0.5);
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	
+	z-index: 1000;
+}
+
+.modal.open + .overlay {
+	opacity: 1;
+	visibility: visible;
+}

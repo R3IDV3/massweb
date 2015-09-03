@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 
-<legend>
-	<div class="row-fluid">
+<section>
+	<div id="persistant-search-summary">
+	</div>
+	<div class="search-summary">
 		<?php 
 			if(count($results) > 0)
 			{
-				echo "Showing " . count($results) . " results of " . $count . " for \"";
+				echo "<h1>Showing " . count($results) . " results of " . $count . " for \"";
 			}
 			else
 			{
-				echo "0 results for \"";
+				echo "<h1>0 results for \"";
 			}
 			
 			if(strlen($searchTerm) < 30)
 			{
-				echo $searchTerm . "\"";
+				echo $searchTerm . "\"</h1>";
 			}
 			else
 			{
-				echo substr($searchTerm, 0, 30) . "...\"";
+				echo substr($searchTerm, 0, 30) . "...\"</h1>";
 			}
 		?>
 		<?php if(count($results) > 0): ?>
-			<a href="search.php" class="btn btn-xs btn-danger pull-right" role="button" style"align:right"> Search Again </a>
-			<a class="btn btn-xs btn-warning pull-right" style="margin-right:10px" href="_/components/php/script-print.php?searchby=<?php echo $searchBy; ?>&id=<?php echo $id; ?>" type="button" value="<?php echo $searchTerm; ?>"> Print CSV</a>
+			<div class="summary-buttons">
+				<a class="button small" href="index.php#search">Search Again</a>&nbsp;&nbsp;
+				<a class="button small" style="margin-right:10px" href="_/components/php/script-print.php?searchby=<?php echo $searchBy; ?>&id=<?php echo $id; ?>" type="button" value="<?php echo $searchTerm; ?>">Print CSV</a>
+			</div>
 		<?php endif; ?>
 	</div>
-</legend>
-
-<?php 
-
-if(count($results) == 0)
-{
-	echo "Sorry, but nothing matched your search criteria. Please try again with different keywords.<br><br>";
-}
-else
-{
-	include 'table-results.php';
-}
+	
+	<?php 
+	
+	if(count($results) == 0)
+	{
+		echo '<div class="no-results-wrapper"><article class="no-results">Sorry, but nothing matched your search criteria. Please <a class="link" href="index.php#search">try again</a> with different keywords.</article></div>';
+	}
+	else
+	{
+		include 'table-results.php';
+	}

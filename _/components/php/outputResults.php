@@ -1,38 +1,30 @@
 <?php
 
-if(!isset($searchTerm))
-{
+if(!isset($searchTerm)) {
 	include 'helper-cleanse.php';
 }
 
-if($_GET['searchterm'] != "")
-{
+if($_GET['searchterm'] != "") {
 	$searchTerm = cleanse($_GET['searchterm']); // cleanse() is found in helper_cleanse.php
 
 	$searchArray = explode(",", $_GET['searchterm']); // multiple search terms can be separated by commas
 
-	foreach($searchArray as $word)
-	{
+	foreach($searchArray as $word) {
 		$searchTerms[] = cleanse($word);
 	}
 
 	$searchTerms = array_filter($searchTerms);
-}
-else
-{
+} else {
 	$searchTerms[0] = "";
 }
 
-$sortby = "";
-
-if(isset($_GET['page']) && is_numeric($_GET['page']))
-{
-	$limit = "LIMIT " . (50 * ($_GET['page'] - 1)) . ", 50";
-}
-else
-{
+if(isset($_GET['page']) && is_numeric($_GET['page'])) {
+	$limit = "LIMIT " . (50 * ($_GET['page'] - 1)) . ", 50"; 
+} else {
 	$limit = "LIMIT 0, 50";
 }
+
+$sortby = "";
 
 if(isset($_GET['sortby']))
 {
@@ -127,141 +119,85 @@ if(isset($_GET['sortby']))
 		$sortby = " ORDER BY weight DESC";
 	}
 }
-else
-{
-	$sortby = " ORDER BY bin_id_bold ASC";
-}
 
 $gtWeightClause = "";
 $ltWeightClause = "";
 
-if(isset($_GET['greaterthan']) && strcmp($_GET['greaterthan'], "") <> 0)
-{
+if(isset($_GET['greaterthan']) && strcmp($_GET['greaterthan'], "") != 0) {
 	$greaterThan = cleanse($_GET['greaterthan']);
-
-	if(strcmp($_GET['greaterchoice'],"gte") == 0)
-	{
-		$gtWeightClause = " weight_minus_pin >= " . $greaterThan;
-	}
-	elseif(strcmp($_GET['greaterchoice'],"gt") == 0) 
-	{
-		$gtWeightClause = " weight_minus_pin > " . $greaterThan;
-	}
-	elseif(strcmp($_GET['greaterchoice'],"eq") == 0) 
-	{
-		$gtWeightClause = " weight_minus_pin = " . $greaterThan;
-	}
+	$gtWeightClause = " weight_minus_pin >= " . $greaterThan;
 }
 
-if(isset($_GET['lessthan']) && strcmp($_GET['lessthan'], "") <> 0)
-{
+if(isset($_GET['lessthan']) && strcmp($_GET['lessthan'], "") != 0) {
 	$lessThan = cleanse($_GET['lessthan']);
-
-	if(strcmp($_GET['greaterchoice'],"gte") == 0)
-	{
-		$ltWeightClause = " weight_minus_pin <= " . $lessThan;
-	}
-	elseif(strcmp($_GET['greaterchoice'],"gt") == 0) 
-	{
-		$ltWeightClause = " weight_minus_pin < " . $lessThan;
-	}
+	$ltWeightClause = " weight_minus_pin <= " . $lessThan;
 }
 
-if(strcmp($ltWeightClause, "") <> 0 AND strcmp($gtWeightClause, "") <> 0)
-{
+if(strcmp($ltWeightClause, "") != 0 AND strcmp($gtWeightClause, "") != 0) {
 	$weightClause =  "(" . $ltWeightClause . " AND " . $gtWeightClause . ")";
-}
-elseif(strcmp($ltWeightClause, "") == 0 AND strcmp($gtWeightClause, "") <> 0)
-{
+} elseif(strcmp($ltWeightClause, "") == 0 AND strcmp($gtWeightClause, "") != 0) {
 	$weightClause =  $gtWeightClause;
-}
-elseif(strcmp($ltWeightClause, "") <> 0 AND strcmp($gtWeightClause, "") == 0)
-{
+} elseif(strcmp($ltWeightClause, "") != 0 AND strcmp($gtWeightClause, "") == 0) {
 	$weightClause =  $ltWeightClause;
 }
 
-if(count($searchTerms) > 0)
-{
-	if(strcmp($_GET['searchby'], "taxonomy") == 0)
-	{
+if(count($searchTerms) > 0) {
+	if(strcmp($_GET['searchby'], "taxonomy") == 0) {
 		// offset duplicate queries caused by calling query-browse first
 		$results = array();
-		include "search-tax.php";	
-	}
-	elseif(strcmp($_GET['searchby'], "binid") == 0)
-	{	
+		include "search-tax.php";
+	} elseif(strcmp($_GET['searchby'], "binid") == 0) {	
 		// offset duplicate queries caused by calling query-browse first
 		$results = array();
 		include "search-bin.php";
 		$searchBy = "bin";
-	}
-	elseif(strcmp($_GET['searchby'], "project") == 0)
-	{
+	} elseif(strcmp($_GET['searchby'], "project") == 0) {
 		// offset duplicate queries caused by calling query-browse first
 		$results = array(); 
 		include "search-project.php";
 		$searchBy = "project";
-	}
-	elseif(strcmp($_GET['searchby'], "processid") == 0)
-	{
+	} elseif(strcmp($_GET['searchby'], "processid") == 0) {
 		include "search-processid.php";
-	}
-	else
-	{
-		if(strcmp($_GET['searchby'], "phylum") == 0)
-		{
+	} else {
+		if(strcmp($_GET['searchby'], "phylum") == 0) {
 			$searchBy = "phylum";
 			$rankId = 1;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "class") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "class") == 0) {
 			$searchBy = "class";
 			$rankId = 2;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "order") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "order") == 0) {
 			$searchBy = "order";
 			$rankId = 3;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "family") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "family") == 0) {
 			$searchBy = "family";
 			$rankId = 4;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "genus") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "genus") == 0) {
 			$searchBy = "genus";
 			$rankId = 7;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "species") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "species") == 0) {
 			$searchBy = "species";
 			$rankId = 8;
 			//hack to fix duplicate searches
 			$results = array();
 			include "search-tax.php";
-		}
-		elseif(strcmp($_GET['searchby'], "bin") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "bin") == 0) {
 			$searchBy = "bin";
-		}
-		elseif(strcmp($_GET['searchby'], "project") == 0)
-		{
+		} elseif(strcmp($_GET['searchby'], "project") == 0) {
 			$searchBy = "project";
 		}
 	}

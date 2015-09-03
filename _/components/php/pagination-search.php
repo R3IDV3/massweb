@@ -1,62 +1,70 @@
 <?php if($count > 50): ?>
 
-	<!-- account for results in even multiples of 50 -->
 	<?php 
-		if(($count % 50) == 0)
-		{
-			$condition = floor($count/50);
-		}
-		else
-		{
-			$condition = (floor($count/50) + 1);
+		$condition = ($count % 50) == 0 ? floor($count/50) : floor($count/50) + 1; // account for results in even multiples of 50
+		
+		function linkToPg($page) {
+			return 'results.php?searchterm=' . $_GET['searchterm'] .
+				'&searchby=' . $_GET['searchby'] . 
+				'&sortby=' . $_GET['sortby'] . 
+				'&greaterchoice=' . $_GET['greaterchoice'] . 
+				'&greaterthan=' . $_GET['greaterthan'] . 
+				'&lessthanchoice=' . $_GET['lessthanchoice'] . 
+				'&lessthan=' . $_GET['lessthan'] . 
+				'&page=' . $page;
 		}
 	?>
 
 	<ul class="pagination">
-		<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=1"> First</a></li>
+		
+		<a href="<?php echo linkToPg(1) ?>"><li>First</li></a>
 
 		<!-- disable prev button if on first page -->
 		<?php if($_GET['page'] == 1): ?>
-			<li class="disabled"><a>&laquo; Prev</a></li>
+			<li class="previous disabled"><i class="fa fa-arrow-left"></i></li>
 		<?php else: ?>
-			<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $_GET['page'] - 1; ?>">&laquo; Prev</a></li>
+			<a href="<?php echo linkToPg($_GET['page'] - 1) ?>"><li class="previous"><i class="fa fa-arrow-left"></i></li></a>
 		<?php endif; ?>
 
 
 		<?php for($i = 1; $i <= $condition; $i++): ?>
 	  
-	  		<!-- only output 1-5 for first 5 pages -->
-	  		<?php if($_GET['page'] <= 5 AND $i <= 5): ?>
-		  		<?php if($i == $_GET['page']): ?>
-		  			<li class="active"><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php else: ?>
-		  			<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php endif; ?>
-		  	<!-- show 2 on either side of current page when not within the last 2 pages -->
-		  	<?php elseif($_GET['page'] > 5 AND ($i >= $_GET['page'] - 2 AND $i <= $_GET['page'] + 2) AND $_GET['page'] <= $condition - 2): ?>
-		  		<?php if($i == $_GET['page']): ?>
-		  			<li class="active"><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php else: ?>
-		  			<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php endif; ?>
-		  	<!-- only output N-5 to N for last 2 pages -->
-		  	<?php elseif(($_GET['page'] > 5) AND ($_GET['page'] >= $condition - 2) AND ($i >= $condition - 5)): ?>
-		  		<?php if($i == $_GET['page']): ?>
-		  			<li class="active"><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php else: ?>
-		  			<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-		  		<?php endif; ?>
-		  	<?php endif; ?>
+			<!-- only output 1-5 for first 5 pages -->
+			<?php if($_GET['page'] <= 5 AND $i <= 5): ?>
+				<?php if($i == $_GET['page']): ?>
+					<a href="<?php echo linkToPg($i) ?>"><li class="active"><?php echo $i; ?></li></a>
+				<?php else: ?>
+					<a href="<?php echo linkToPg($i) ?>"><li><?php echo $i; ?></li></a>		
+				<?php endif; ?>
+			
+			<!-- show 2 on either side of current page when not within the last 2 pages -->
+			<?php elseif($_GET['page'] > 5 AND ($i >= $_GET['page'] - 2 AND $i <= $_GET['page'] + 2) AND $_GET['page'] <= $condition - 2): ?>
+				<?php if($i == $_GET['page']): ?>
+					<a href="<?php echo linkToPg($i) ?>"><li class="active"><?php echo $i; ?></li></a>
+				<?php else: ?>
+					<a href="<?php echo linkToPg($i) ?>"><li><?php echo $i; ?></li></a>
+				<?php endif; ?>
 
-	  	<?php endfor; ?>
+			<!-- only output N-5 to N for last 2 pages -->
+			<?php elseif(($_GET['page'] > 5) AND ($_GET['page'] >= $condition - 2) AND ($i >= $condition - 4)): ?>
+				<?php if($i == $_GET['page']): ?>
+					<a href="<?php echo linkToPg($i) ?>"><li class="active"><?php echo $i; ?></li></a>
+				<?php else: ?>
+					<a href="<?php echo linkToPg($i) ?>"><li><?php echo $i; ?></li></a>
+				<?php endif; ?>
+			<?php endif; ?>
 
-	  	<!-- disable next button if on last page -->
+		<?php endfor; ?>
+
+		<!-- disable next button if on last page -->
 		<?php if($_GET['page'] == $condition): ?>
-			<li class="disabled"><a> Next &raquo;</a></li>
+			<li class="next disabled"><i class="fa fa-arrow-right"></i></li>
 		<?php else: ?>
-			<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $_GET['page'] + 1; ?>"> Next &raquo;</a></li>
+			<a href="<?php echo linkToPg($_GET['page'] + 1) ?>"><li class="next"><i class="fa fa-arrow-right"></i></li></a>	
 		<?php endif; ?>
-		<li><a href="results.php?searchterm=<?php echo $_GET['searchterm'];?>&searchby=<?php echo $_GET['searchby']; ?>&sortby=<?php echo $_GET['sortby']; ?>&greaterchoice=<?php echo $_GET['greaterchoice']; ?>&greaterthan=<?php echo $_GET['greaterthan']; ?>&lessthanchoice=<?php echo $_GET['lessthanchoice']; ?>&lessthan=<?php echo $_GET['lessthan']; ?>&page=<?php echo $condition; ?>"> Last</a></li>
+		
+		<a href="<?php echo linkToPg($condition) ?>"><li>Last</li></a>
+		
 	</ul>
 
 <?php endif; ?>

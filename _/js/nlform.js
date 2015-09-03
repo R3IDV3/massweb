@@ -52,8 +52,10 @@
 		this.elOriginal = el;
 		this.pos = idx;
 		this.type = type;
-		this._create();
-		this._initEvents();
+		if ( $(el).attr('type') != "hidden" ) {
+			this._create();
+			this._initEvents();
+		}
 	}
 
 	NLField.prototype = {
@@ -72,6 +74,12 @@
 			this.toggle = document.createElement( 'a' );
 			this.toggle.innerHTML = this.elOriginal.options[ this.elOriginal.selectedIndex ].innerHTML;
 			this.toggle.className = 'nl-field-toggle';
+			////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////
+			this.toggle.setAttribute('data-title', this.elOriginal.getAttribute('data-title'));
+			this.toggle.setAttribute('data-description', this.elOriginal.getAttribute('data-description'));
+			////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////
 			this.optionsList = document.createElement( 'ul' );
 			var ihtml = '';
 			Array.prototype.slice.call( this.elOriginal.querySelectorAll( 'option' ) ).forEach( function( el, i ) {
@@ -94,6 +102,12 @@
 			this.toggle = document.createElement( 'a' );
 			this.toggle.innerHTML = this.elOriginal.getAttribute( 'placeholder' );
 			this.toggle.className = 'nl-field-toggle';
+			////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////
+			this.toggle.setAttribute('data-title', this.elOriginal.getAttribute('data-title'));
+			this.toggle.setAttribute('data-description', this.elOriginal.getAttribute('data-description'));
+			////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////
 			this.optionsList = document.createElement( 'ul' );
 			this.getinput = document.createElement( 'input' );
 			this.getinput.setAttribute( 'type', 'text' );

@@ -1,0 +1,118 @@
+.popover {
+	display: inline-block;
+	position: absolute;
+	
+	width: 300px;
+	
+	margin: 0;
+	margin-left: 25px / sqrt(2);
+	padding: 0;
+	
+	background: rgba(0,0,0,0.5);
+	//box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.05);
+	
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+			
+	&::before {
+		content: '';
+		display: block;
+		margin: 1px;
+		padding: 0;
+		position: absolute;
+		@include vc();
+		width: 25px;
+		height: 25px;
+		background: -webkit-linear-gradient(45deg, rgba(0,0,0,0.5) 50%, transparent 50%);
+		background: -o-linear-gradient(		45deg, transparent 50%, rgba(0,0,0,0.5) 50%);
+		background: -moz-linear-gradient(	45deg, rgba(0,0,0,0.5) 50%, transparent 50%);
+		background: linear-gradient(		45deg, rgba(0,0,0,0.5) 50%, transparent 50%);
+	    transform: rotate(45deg);
+	    -webkit-transform: rotate(45deg);
+	    -moz-transform: rotate(45deg);
+	    @include vp(transform-origin, 75% -37.5%);
+	}
+	
+	&.show {
+		visibility: visible;
+		opacity: 1;
+	}
+	
+	h1 {
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 30px;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		
+		font-weight: $light;
+		font-size: 2rem;
+		line-height: 30px;
+		text-align: center;
+		
+		border-bottom: 1px dashed rgba(255,255,255,0.7);
+	}
+	
+	p {
+		font-size: 1.6rem;
+		font-weight: $regular;
+		margin: 50px 20px 20px 20px;
+		padding: 0;
+	}
+	
+	.navigation {
+		display: block;
+		height: 30px;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		
+		.next {
+			display: inline-block;
+			height: 100%;
+			width: 50%;
+			margin: 0;
+			padding: 0;
+			cursor: pointer;
+			background: rgba(0,0,0,0.1);
+			text-align: center;
+			color: transparent;
+			@include vp(transition, 0.25s);
+			
+			&:hover {
+				background: rgba(0,0,0,0.2);
+			}
+			
+			&::before {
+				font-family: 'fontawesome';
+				content: "\f061";
+				font-size: 75%;
+				color: #fff;
+				width: 100%;
+				line-height: 30px;
+				display: block;
+			}
+		}
+		
+		.previous {
+			@extend .next;
+			
+			&::before {
+				content: '\f060';
+			}
+		}
+		
+		.disabled {
+			pointer-events: none;
+			background: rgba(0,0,0,0.05);
+			
+			&::before {
+				color: rgba(255,255,255,0.5);
+			}
+		}
+	}
+}

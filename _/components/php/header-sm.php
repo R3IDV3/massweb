@@ -9,12 +9,12 @@
 				MassBase
 			</div>
 		</div><!-- /logo -->
-		<nav class="main">
+		<nav>
 			<ul>
 				<li><a href="#">Home</a></li>
 				<li><a href="#about">About</a></li>
 				<li><a href="#search">Search</a></li>
-				<li><a href="#" class="mp-trigger">Browse</a></li>
+				<li><a href="#">Browse</a></li>
 			</ul>
 		</nav>
 	</div><!-- /navbar -->
